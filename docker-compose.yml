@@ -1,0 +1,27 @@
+version: "3"
+services:
+  webserver:
+    build: 
+      context: ./bin/php/7.2
+    ports:
+      - "80:80"
+      - "443:443"
+    links: 
+      - mysql
+    volumes: 
+      - ./www:/var/www/html
+      - ./config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./config/vhosts:/etc/apache2/sites-enabled
+      - ./logs/apache2:/var/log/apache2
+  mysql:
+    build: ./bin/mysql
+    ports:
+      - "3306:3306"
+    volumes: 
+      - ./data/mysql:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+      MYSQL_DATABASE: dockerdb
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
