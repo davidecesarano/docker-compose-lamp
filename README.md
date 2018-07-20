@@ -4,3 +4,8 @@ The main services included are:
 * Apache2
 * PHP 7.2.7
 * MariaDB
+
+## Usage
+git clone ttps://github.com/davidecesarano/docker-compose-lamp.git
+cd docker-compose-lamp/
+docker-compose up -d
