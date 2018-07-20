@@ -18,7 +18,7 @@ services:
     ports:
       - "3306:3306"
     volumes: 
-      - ./data/mysql:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
       - ./logs/mysql:/var/log/mysql
     environment:
       MYSQL_ROOT_PASSWORD: docker
