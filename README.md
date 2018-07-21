@@ -7,7 +7,7 @@ The main services included are:
 
 ## Usage
 ```
-git clone https://github.com/davidecesarano/docker-compose-lamp.git
-cd docker-compose-lamp/
-docker-compose up -d
+$ git clone https://github.com/davidecesarano/docker-compose-lamp.git
+$ cd docker-compose-lamp
+$ docker-compose up -d
 ```
