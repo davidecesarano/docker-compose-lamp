@@ -1,7 +1,5 @@
 FROM php:7.2-apache
-MAINTAINER dev@chialab.it
 
-# Install PHP extensions and PECL modules.
 RUN buildDeps=" \
         default-libmysqlclient-dev \
         libbz2-dev \
@@ -32,8 +30,3 @@ RUN buildDeps=" \
     && apt-get purge -y --auto-remove $buildDeps \
     && rm -r /var/lib/apt/lists/* \
     && a2enmod rewrite
-
-# Install Composer.
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && ln -s $(composer config --global home) /root/composer
-ENV PATH $PATH:/root/composer/vendor/bin
