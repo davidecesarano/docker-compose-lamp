@@ -6,6 +6,8 @@ The main services included are:
 * MariaDB
 
 ## Usage
-git clone ttps://github.com/davidecesarano/docker-compose-lamp.git
-cd docker-compose-lamp/
-docker-compose up -d
+```
+$ git clone https://github.com/davidecesarano/docker-compose-lamp.git
+$ cd docker-compose-lamp
+$ docker-compose up -d
+```
