@@ -35,6 +35,6 @@ RUN echo "ServerName localhost" >> /etc/apache2/httpd.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # actvite mod_rewrite
-RUN a2enmod rewrite
+RUN a2enmod rewrite ssl headers
 
 CMD apachectl -D FOREGROUND
