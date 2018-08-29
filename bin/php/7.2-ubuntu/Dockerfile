@@ -37,5 +37,4 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # actvite mod_rewrite
 RUN a2enmod rewrite
 
-CMD /etc/init.d/mysql start -D FOREGROUND
-CMD /usr/sbin/apache2ctl -D FOREGROUND
+CMD apachectl -D FOREGROUND
