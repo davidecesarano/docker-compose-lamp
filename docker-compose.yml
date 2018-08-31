@@ -1,8 +1,7 @@
 version: "3"
 services:
   webserver:
-    build: 
-      context: ./bin/php/7.2-ubuntu
+    image: davidecesarano/docker-compose-lamp
     container_name: webserver-lamp
     restart: always
     ports:
@@ -15,11 +14,10 @@ services:
       - ./config/php/php.ini:/usr/local/etc/php/php.ini
       - ./config/vhosts:/etc/apache2/sites-enabled
   mysql:
-    build: 
-      context: ./bin/mysql
+    image: mariadb:latest
     container_name: mysql-lamp
     ports:
-      - "127.0.0.1:3306:3306"
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: docker
     volumes: 
