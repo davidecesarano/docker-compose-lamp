@@ -37,8 +37,14 @@ RUN apt-get install -y software-properties-common \
 	&& apt-get update \
 	&& apt-get install -y python-certbot-apache
 
+#certbotauto
+RUN cd /usr/local/sbin \
+	&& curl -s https://dl.eff.org/certbot-auto > certbot-auto \
+	&& chmod a+x certbot-auto
+
 #composer
 RUN mkdir /tmp/composer && \
+	cd /tmp/composer \
 	curl -sS https://getcomposer.org/installer | php && \
 	mv composer.phar /usr/local/bin/composer
 
