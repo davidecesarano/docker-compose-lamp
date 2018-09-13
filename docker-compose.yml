@@ -1,8 +1,7 @@
 version: "3"
 services:
   webserver:
-    #image: davidecesarano/docker-compose-lamp
-    build: './bin/php'
+    image: davidecesarano/docker-compose-lamp
     container_name: webserver-lamp
     restart: always
     ports:
@@ -12,7 +11,7 @@ services:
       - mysql
     volumes:
       - ./node:/opt/node
-      - ./var/www/html:/var/www/html
+      - ./www:/var/www/html
       - ./config/php/php.ini:/usr/local/etc/php/php.ini
       - ./config/vhosts:/etc/apache2/sites-enabled
   mysql:
