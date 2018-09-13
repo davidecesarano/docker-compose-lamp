@@ -1,7 +1,8 @@
 version: "3"
 services:
   webserver:
-    image: davidecesarano/docker-compose-lamp
+    #image: davidecesarano/docker-compose-lamp
+    build: './bin/php'
     container_name: webserver-lamp
     restart: always
     ports:
@@ -9,8 +10,9 @@ services:
       - "443:443"
     links: 
       - mysql
-    volumes: 
-      - ./www:/var/www/html
+    volumes:
+      - ./node:/opt/node
+      - ./var/www/html:/var/www/html
       - ./config/php/php.ini:/usr/local/etc/php/php.ini
       - ./config/vhosts:/etc/apache2/sites-enabled
   mysql:
@@ -20,3 +22,5 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: docker
+    volumes:
+      - ./mysql:/var/lib/mysql
