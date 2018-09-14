@@ -43,10 +43,10 @@ RUN cd /usr/local/sbin \
 	&& chmod a+x certbot-auto
 
 #composer
-RUN mkdir /tmp/composer && \
-	cd /tmp/composer \
-	curl -sS https://getcomposer.org/installer | php && \
-	mv composer.phar /usr/local/bin/composer
+RUN mkdir /tmp/composer \
+	&& cd /tmp/composer \
+	&& curl -sS https://getcomposer.org/installer | php \
+	&& mv composer.phar /usr/local/bin/composer
 
 RUN echo "ServerName localhost" >> /etc/apache2/httpd.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
