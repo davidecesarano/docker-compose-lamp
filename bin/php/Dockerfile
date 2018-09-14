@@ -58,6 +58,6 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 	&& mkdir /opt/node
 
 # actvite mod_rewrite
-RUN a2enmod rewrite ssl headers
+RUN a2enmod rewrite ssl headers proxy
 
 CMD apachectl -D FOREGROUND
