@@ -1,25 +1,31 @@
-version: "3"
+version: "3.6"
 services:
   webserver:
     image: davidecesarano/docker-compose-lamp
-    container_name: webserver-lamp
     restart: always
-    ports:
-      - "80:80"
-      - "443:443"
+    ports: 
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
     links: 
       - mysql
     volumes:
       - ./node:/opt/node
       - ./www:/var/www/html
-      - ./config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./config/php/php.ini:/etc/php/7.2/apache2/conf.d/custom.ini 
       - ./config/vhosts:/etc/apache2/sites-enabled
+      - ./ssl:/etc/letsencrypt
   mysql:
     image: mariadb:latest
-    container_name: mysql-lamp
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: docker
     volumes:
       - ./mysql:/var/lib/mysql
+      - ./config/mysql:/etc/mysql
