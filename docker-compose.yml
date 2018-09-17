@@ -17,6 +17,7 @@ services:
     volumes:
       - ./node:/opt/node
       - ./www:/var/www/html
+      - ./config/apache2/custom.conf:/etc/apache2/mods-enabled/my.conf
       - ./config/php/php.ini:/etc/php/7.2/apache2/conf.d/custom.ini 
       - ./config/vhosts:/etc/apache2/sites-enabled
       - ./ssl:/etc/letsencrypt
