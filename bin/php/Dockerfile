@@ -60,4 +60,7 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 # actvite mod_rewrite
 RUN a2enmod rewrite ssl headers proxy proxy_http proxy_wstunnel
 
+#start cron service
+RUN service cron start
+
 CMD apachectl -D FOREGROUND
