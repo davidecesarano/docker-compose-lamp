@@ -13,6 +13,7 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 RUN add-apt-repository ppa:ondrej/php
 
+# php 7.2
 RUN apt-get update \
 	&& apt-get install -y \
 		php7.2 \
@@ -29,29 +30,33 @@ RUN apt-get update \
 		php7.2-curl \
 		php7.2-mysql \
 		php7.2-xmlrpc \
-		libapache2-mod-php7.2 
+		libapache2-mod-php7.2 \
 
-#certbot / letsencrypt
+# cronolog
+RUN apt-get install -y cronolog
+
+# certbot / letsencrypt
 RUN apt-get install -y software-properties-common \
 	&& add-apt-repository ppa:certbot/certbot \
 	&& apt-get update \
 	&& apt-get install -y python-certbot-apache
 
-#certbotauto
+# certbotauto
 RUN cd /usr/local/sbin \
 	&& curl -s https://dl.eff.org/certbot-auto > certbot-auto \
 	&& chmod a+x certbot-auto
 
-#composer
+# composer
 RUN mkdir /tmp/composer \
 	&& cd /tmp/composer \
 	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer
 
+# servername
 RUN echo "ServerName localhost" >> /etc/apache2/httpd.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-#nodejs
+# nodejs
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 	&& apt-get install -y nodejs \
 			   build-essential \
@@ -60,7 +65,7 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 # actvite mod_rewrite
 RUN a2enmod rewrite ssl headers proxy proxy_http proxy_wstunnel
 
-#start cron service
+# start cron service
 RUN service cron start
 
 CMD apachectl -D FOREGROUND
