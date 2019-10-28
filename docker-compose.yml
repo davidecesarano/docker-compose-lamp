@@ -24,9 +24,12 @@ services:
   mysql:
     image: mariadb:latest
     ports:
-      - "3306:3306"
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
     environment:
       MYSQL_ROOT_PASSWORD: docker
     volumes:
       - ./mysql:/var/lib/mysql
-      - ./config/mysql:/etc/mysql
+      - ./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
