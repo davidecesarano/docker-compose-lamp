@@ -3,17 +3,20 @@ FROM ubuntu:16.04
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install --assume-yes apt-utils
 
+# software
 RUN apt-get install -y curl zip git nano software-properties-common python-software-properties
 
+# apache
 RUN apt-get install -y apache2
 
-RUN apt-get install -y language-pack-en-base 
+# locale
+RUN apt-get install -y language-pack-en-base language-pack-it
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
-RUN add-apt-repository ppa:ondrej/php
 
 # php 7.2
+RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update \
 	&& apt-get install -y \
 		php7.2 \
@@ -62,10 +65,17 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 			   build-essential \
 	&& mkdir /opt/node
 
-# actvite mod_rewrite
+# install pm2
+RUN npm install pm2 -g
+
+# actvite mod
 RUN a2enmod rewrite ssl headers proxy proxy_http proxy_wstunnel
 
 # start cron service
 RUN service cron start
 
+# start node apps
+RUN npm start /opt/node/ecosystem.config.yaml
+
+# start apache
 CMD apachectl -D FOREGROUND

@@ -1,0 +1,4 @@
+apps:
+  - script: ./app1/index.js
+    name: 'app1'
+    watch: true
