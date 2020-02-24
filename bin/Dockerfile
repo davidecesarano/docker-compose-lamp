@@ -17,23 +17,7 @@ ENV LC_ALL en_US.UTF-8
 
 # php 7.2
 RUN add-apt-repository ppa:ondrej/php
-RUN apt-get update \
-	&& apt-get install -y \
-		php7.2 \
-		php7.2-cli \
-		php7.2-common \
-		php7.2-intl \
-		php7.2-mbstring \
-		php7.2-soap \
-		php7.2-xml \
-		php7.2-zip \
-		php7.2-apcu \
-		php7.2-json \
-		php7.2-gd \
-		php7.2-curl \
-		php7.2-mysql \
-		php7.2-xmlrpc \
-		libapache2-mod-php7.2 \
+RUN apt-get update && apt-get install -y php7.2 php7.2-cli php7.2-common php7.2-intl php7.2-mbstring php7.2-soap php7.2-xml php7.2-zip php7.2-apcu php7.2-json php7.2-gd php7.2-curl php7.2-mysql php7.2-xmlrpc libapache2-mod-php7.2
 
 # cronolog
 RUN apt-get install -y cronolog
@@ -68,14 +52,11 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 # install pm2
 RUN npm install pm2 -g
 
-# actvite mod
+# active mod
 RUN a2enmod rewrite ssl headers proxy proxy_http proxy_wstunnel
 
-# start cron service
+# start cron
 RUN service cron start
 
-# start node apps
-RUN npm start /opt/node/ecosystem.config.yaml
-
-# start apache
-CMD apachectl -D FOREGROUND
+# start apache and pm2 apps
+ENTRYPOINT pm2 start /opt/node/ecosystem.config.yaml && apachectl -D FOREGROUND && /bin/bash
