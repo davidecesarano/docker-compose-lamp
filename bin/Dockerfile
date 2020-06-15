@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install --assume-yes apt-utils
 
 # software
-RUN apt-get install -y curl zip git nano software-properties-common python-software-properties
+RUN apt-get install -y curl zip git nano software-properties-common
 
 # apache
 RUN apt-get install -y apache2
