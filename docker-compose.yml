@@ -1,7 +1,9 @@
 version: "3.6"
 services:
   webserver:
-    image: davidecesarano/docker-compose-lamp
+    build:
+      context: ./bin/php7.4-apache
+    container_name: php7.4-apache
     restart: always
     ports: 
       - target: 80
@@ -12,17 +14,32 @@ services:
         published: 443
         protocol: tcp
         mode: host
-    links: 
-      - mysql
     volumes:
-      - ./node:/opt/node
       - ./www:/var/www/html
       - ./config/apache2/custom.conf:/etc/apache2/mods-enabled/my.conf
-      - ./config/php/php.ini:/etc/php/7.2/apache2/conf.d/custom.ini 
+      - ./config/php/php.ini:/etc/php/7.4/apache2/conf.d/custom.ini 
       - ./config/vhosts:/etc/apache2/sites-enabled
+      - ./logs/apache2:/var/log/apache2
       - ./ssl:/etc/letsencrypt
+    links:
+      - mysql
+  nodejs:
+    build:
+      context: ./bin/nodejs
+    container_name: nodejs
+    restart: always
+    ports: 
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: host
+    volumes:
+      - ./node:/opt/node
   mysql:
-    image: mariadb:latest
+    build:
+      context: ./bin/mariadb
+    container_name: mariadb
+    restart: always
     ports:
       - target: 3306
         published: 3306
@@ -34,3 +51,4 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       - ./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./logs/mysql:/var/log/mysql
