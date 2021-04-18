@@ -19,7 +19,6 @@ services:
       - ./config/apache2/custom.conf:/etc/apache2/mods-enabled/my.conf
       - ./config/php/php.ini:/etc/php/7.4/apache2/conf.d/custom.ini 
       - ./config/vhosts:/etc/apache2/sites-enabled
-      - ./logs/apache2:/var/log/apache2
       - ./ssl:/etc/letsencrypt
     links:
       - mysql
@@ -51,4 +50,3 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       - ./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./logs/mysql:/var/log/mysql
