@@ -35,6 +35,5 @@ RUN apt-get install build-essential
 
 # install pm2
 RUN npm i -g pm2
-
 # start apache2 and pm2 apps
 ENTRYPOINT pm2-runtime /opt/node/ecosystem.config.js
