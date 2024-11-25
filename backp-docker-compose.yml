@@ -1,0 +1,52 @@
+version: "3.6"
+services:
+  webserver:
+    build:
+      context: ./bin/php7.4-apache
+    container_name: php7.4-apache
+    restart: always
+    ports: 
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    volumes:
+      - ./www:/var/www/html
+      - ./config/apache2/custom.conf:/etc/apache2/mods-enabled/my.conf
+      - ./config/php/php.ini:/etc/php/7.4/apache2/conf.d/custom.ini 
+      - ./config/vhosts:/etc/apache2/sites-enabled
+      - ./ssl:/etc/letsencrypt
+    links:
+      - mysql
+  nodejs:
+    build:
+      context: ./bin/nodejs
+    container_name: nodejs
+    restart: always
+    ports: 
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: host
+    volumes:
+      - ./node:/opt/node
+  mysql:
+    build:
+      context: ./bin/mariadb
+    container_name: mariadb
+    restart: always
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+      TZ: Europe/Rome
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
