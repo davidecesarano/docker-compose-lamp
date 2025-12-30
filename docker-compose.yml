@@ -9,7 +9,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./www:/var/www/html
+      - ./www:/var/www/html:rw
       - ./config/apache2/custom.conf:/etc/apache2/mods-enabled/my.conf
       - ./config/php/php.ini:/usr/local/etc/php/php.ini
       - ./config/vhosts:/etc/apache2/sites-enabled
@@ -17,3 +17,20 @@ services:
       - ./ssl:/etc/letsencrypt
     extra_hosts:
       - "host.docker.internal:host-gateway"
+  mysql:
+    build:
+      context: ./bin/mariadb
+    container_name: mariadb
+    restart: always
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+      TZ: Europe/Rome
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./logs/mysql:/var/log/mysql
